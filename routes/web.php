@@ -11,13 +11,25 @@
 |
 */
 
-Route::get('', function () {
-    return view('welcome');
-});
-Route::get('board', function () {
-    return view('board.layout');
-});
+//Home page
+Route::get('/', 'HomeController@index')->name('index');
+//search
+Route::get('search', 'HomeController@search')->name('search');
 
-Auth::routes();
+//show login form
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+//post login data
+Route::post('login', 'Auth\LoginController@login');
+//logout
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('posts', 'PostsController');
+Route::resource('posts/types', 'PostTypesController',['except'=>['index']]);
+
+
+
+
+//Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');
