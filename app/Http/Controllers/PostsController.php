@@ -30,9 +30,7 @@ class PostsController extends Controller
     public function index()
     {
         $posts = PostEloquent::orderBy('created_at', 'DESC')->paginate(5);
-        $post_types = PostTypeEloquent::orderBy('name', 'ASC')->get();
-        $posts_total = PostEloquent::get()->count();
-        return View::make('posts.index', compact('posts', 'post_types', 'posts_total'));
+        return View::make('posts.index', compact('posts'));
     }
 
     /**
@@ -54,7 +52,8 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        $post = new PostEloquent($request->all);
+        var_dump($request->all());
+        $post = new PostEloquent($request->all());
         $post->user_id = Auth::user()->id;
         $post->save();
         return Redirect::route('posts.index');
@@ -81,8 +80,8 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = PostEloquent::findOrFail($id);
-        $post->types = PostTypeEloquent::orderBy('name', 'ASC')->get();
-        return View::route('posts.edit', compact('post', 'post_types'));
+        $post_types = PostTypeEloquent::orderBy('name', 'ASC')->get();
+        return View::make('posts.edit', compact('post', 'post_types'));
     }
 
     /**

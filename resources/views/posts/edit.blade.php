@@ -8,7 +8,7 @@
             <div class="col-md-8 offset-md-2">
                 <div class="card">
                     <div class="card-header">
-                        編輯:{{$psot->title}}
+                        編輯:{{$post->title}}
                     </div>
                     <div class="card-body>">
                         <div class="container-fluid">
@@ -27,7 +27,7 @@
                                         <select name="type" id="type" class="form-control form-control-md">
                                             <option value="0">請選擇...</option>
                                             @foreach($post_types as $post_type)
-                                                <option value="{{$post_type->id}}" {{ ($post_type == $post_type->id)?"selected":"" }}>
+                                                <option value="{{$post_type->id}}" {{ ($post->type == $post_type->id)?"selected":"" }}>
                                                     {{$post_type->name}}
                                                 </option>
                                             @endforeach

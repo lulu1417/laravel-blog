@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\PostTypeReuest;
+use App\Http\Requests\PostTypeRequest;
 use App\Post as PostEloquent;
 use App\PostType as PostTypeEloquent;
 use View;
@@ -46,7 +46,7 @@ class PostTypesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostTypeReuest $request)
+    public function store(PostTypeRequest $request)
     {
         PostTypeEloquent::create($request->only('name'));
         return Redirect::route('posts.index');
@@ -86,7 +86,7 @@ class PostTypesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostTypeReuest $request, $id)
+    public function update(PostTypeRequest $request, $id)
     {
         $post_type = PostTypeEloquent::findOrFail($id);
         $post_type->fill($request->only('name'));
@@ -103,7 +103,7 @@ class PostTypesController extends Controller
     public function destroy($id)
     {
         $post_type = PostTypeEloquent::findOrFail($id);
-        $post_type->posts()->delete(); //該類型的所有文章都刪除？
+        $post_type->posts()->delete();
         $post_type->delete();
         return Redirect::route('posts.index');
     }

@@ -16,6 +16,11 @@
                                     <label for="title" class="col-md-2 col-form-label-md text-md-right">標題</label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control form-control-md" name="title" id="title">
+                                    @if($errors->has('title'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{$errors->first('title')}}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                             <div class="form-group row">

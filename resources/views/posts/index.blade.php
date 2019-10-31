@@ -32,22 +32,23 @@
                                 </form>
                             </div>
                             <div class="float-right">
-                                <a href="{{route('types.edit', ['type' => $type->id])}}" class="btn btn-md btn-primary ml-2">
+                                <a href="{{route('types.edit', ['type' => $type->id])}}"
+                                   class="btn btn-md btn-primary ml-2">
                                     <i class="fas fa-pencil-alt"></i>
                                     <span class="pl-1">編輯分類</span>
                                 </a>
                             </div>
-                            @endauth
-                        @endisset
+                        @endauth
+                    @endisset
 
-                        @isset($keyword)
-                            搜尋：{{$keyword}}
-                        @else
-                            所有文章
-                        @endisset
+                    @isset($keyword)
+                        搜尋：{{$keyword}}
+                    @else
+                        所有文章
+                    @endisset
                 </h4>
                 <hr>
-                @if(count($posts))
+                @if(!count($posts))
                     <p class="text-center">
                         沒有任何文章
                     </p>
@@ -86,7 +87,8 @@
                                         @auth
                                             <form action="{{route('posts.destroy', ['id'=>$post->id])}}" method="POST">
                                                 @csrf
-                                                <a href="{{route('posts.edit', ['id' => $post->id])}}" class="btn btn-md btn-primary">
+                                                <a href="{{route('posts.edit', ['id' => $post->id])}}"
+                                                   class="btn btn-md btn-primary">
                                                     <i class="fas fa-pencil-alt"></i>
                                                     <span class="pl-1">編輯文章</span>
                                                 </a>
@@ -99,7 +101,8 @@
                                         @endauth
                                         <div>
                                             <div class="col-md-4">
-                                                <a href="{{route('posts.show', ['id'=>$post->id])}}" class="float-right card-link">繼續閱讀...</a>
+                                                <a href="{{route('posts.show', ['id'=>$post->id])}}"
+                                                   class="float-right card-link">繼續閱讀...</a>
                                             </div>
                                         </div>
                                     </div>
@@ -110,35 +113,36 @@
 
                         <div class="col-md-4">
                             <div class="list-group">
-                                <a href="{{route('posts.index')}}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {{ (isset($type))?'':'active' }}">
+                                <a href="{{route('posts.index')}}"
+                                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {{ (isset($type))?'':'active' }}">
                                     全部分類
-                                    <span class="badge badge-secondary badge-pill">{{$posts_total}}</span>
+                                                                        <span class="badge badge-secondary badge-pill">{{$posts_total}}</span>
                                 </a>
                                 @foreach($post_types as $post_type)
-                                    <a href="{{route('types.show', ['id'=>$post_type->id])}}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {{ (isset($type))?(($type->id == $post_type->id)?'active':''):'' }}">
+                                    <a href="{{route('types.show', ['id'=>$post_type->id])}}"
+                                       class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {{ (isset($type))?(($type->id == $post_type->id)?'active':''):'' }}">
                                         {{$post_type->name}}
                                         <span class="badge badge-secondary badge-pill">
                                             {{$post_type->posts->count() }}
                                         </span>
                                     </a>
-                                    @endforeach
+                                @endforeach
                                 @auth
                                     <a href="{{route('types.create')}}" class="list-group-item list-group-item-action">建立新分類</a>
-                            @endauth
+                                @endauth
+                            </div>
+
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-md-8">
+                                @isset($keyword)
+                                    {{$posts->appends(['keyword'=>$keyword])->render()}} {{--建立頁碼--}}
+                                @else
+                                    {{$posts->render()}}
+                                @endisset
                             </div>
                         </div>
-
                     </div>
-                    <div class="row pt-2">
-                        <div class="col-md-8">
-                            @isset($keyword)
-                                {{$posts->appends(['keyword'=>$keyword])->render()}} {{--建立頁碼--}}
-                            @else
-                                {{$posts->render()}}
-                            @endisset
-                        </div>
-                    </div>
-            </div>
 @stop
 
 
